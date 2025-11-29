@@ -35,6 +35,16 @@ class MyorderpageView extends GetView<MyorderpageController> {
             color: Colors.white,
           ),
         ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.refresh, color: Colors.white),
+            tooltip: 'Refresh',
+            onPressed: () {
+              // Refresh the same page
+              Get.offAll(() => MyorderpageView());
+            },
+          ),
+        ],
         leading: IconButton(
           onPressed: () {
             Get.offAll(() => BottomnavigationbarView());
