@@ -48,6 +48,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(
       () => GetMaterialApp(
+        navigatorObservers: [GetObserver()],
+
         debugShowCheckedModeBanner: false,
         title: "Food App",
         theme: AppTheme.lightTheme,

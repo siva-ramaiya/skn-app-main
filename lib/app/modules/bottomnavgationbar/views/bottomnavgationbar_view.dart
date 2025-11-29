@@ -99,7 +99,7 @@ class _BottomnavigationbarViewState extends State<BottomnavigationbarView> {
                     ),
                   ],
                 )
-              : const SizedBox(),
+              : const SizedBox.shrink(),
         ),
         body: _screens[_selectedIndex],
         bottomNavigationBar: Obx(() {
