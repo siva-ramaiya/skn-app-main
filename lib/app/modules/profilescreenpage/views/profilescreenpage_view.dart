@@ -332,7 +332,7 @@ class ProfilescreenpageView extends GetView<ProfilescreenpageController> {
     final screenWidth = mq.width;
     final screenHeight = mq.height;
 
-    final headerHeight = screenHeight * 0.22;
+    final headerHeight = screenHeight * 0.15;
     final profileImageRadius = screenWidth * 0.13;
     final profileCardHorizontalMargin = screenWidth * 0.05;
     final profileCardVerticalPadding = screenHeight * 0.025;
@@ -387,18 +387,40 @@ class ProfilescreenpageView extends GetView<ProfilescreenpageController> {
                 ),
                 child: Column(
                   children: [
-                    Obx(
-                      () => Stack(
+                    Obx(() {
+                      final imagePath = controller.profileImage.value;
+                      final isNetworkImage = imagePath.startsWith('http');
+                      final isFileImage = imagePath.startsWith('/');
+
+                      return Stack(
                         children: [
                           CircleAvatar(
                             radius: profileImageRadius,
-                            backgroundImage:
-                                controller.profileImage.value.startsWith(
-                                  'assets/',
-                                )
-                                ? AssetImage(controller.profileImage.value)
-                                : FileImage(File(controller.profileImage.value))
-                                      as ImageProvider,
+                            backgroundColor: isDark ? Colors.grey[800] : Colors
+                                .grey[200],
+                            backgroundImage: isNetworkImage
+                                ? NetworkImage(imagePath)
+                                : isFileImage
+                                ? FileImage(File(imagePath)) as ImageProvider
+                                : null,
+                            child: isNetworkImage || isFileImage
+                                ? null
+                                : Icon(
+                              Icons.person,
+                              size: profileImageRadius,
+                              color: isDark ? Colors.white70 : Colors.grey[600],
+                            ),
+                            onBackgroundImageError: (exception, stackTrace) {
+                              print(
+                                  '❌ Failed to load profile image: $exception');
+                              // Fallback to default avatar if image fails to load
+                              if (isNetworkImage) {
+                                controller.profileImage.value =
+                                'https://ui-avatars.com/api/?name=${Uri
+                                    .encodeComponent(controller.userName
+                                    .value)}&background=random&color=fff&size=200';
+                              }
+                            },
                           ),
                           Positioned(
                             bottom: 0,
@@ -429,11 +451,11 @@ class ProfilescreenpageView extends GetView<ProfilescreenpageController> {
                             ),
                           ),
                         ],
-                      ),
-                    ),
+                      );
+                    }),
                     SizedBox(height: textSpacing),
                     Obx(
-                      () => Row(
+                          () => Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
@@ -455,9 +477,19 @@ class ProfilescreenpageView extends GetView<ProfilescreenpageController> {
                         ],
                       ),
                     ),
+                    SizedBox(height: screenHeight * 0.005),
+                    Obx(
+                          () => Text(
+                        controller.phone.value,
+                        style: GoogleFonts.poppins(
+                          fontSize: screenWidth * 0.035,
+                          color: Colors.grey,
+                        ),
+                      ),
+                    ),
                     SizedBox(height: screenHeight * 0.008),
                     Obx(
-                      () => Text(
+                          () => Text(
                         controller.email.value,
                         style: GoogleFonts.poppins(
                           fontSize: screenWidth * 0.035,
@@ -471,13 +503,13 @@ class ProfilescreenpageView extends GetView<ProfilescreenpageController> {
               ),
             ),
             SizedBox(height: screenHeight * 0.012),
-            _buildMenuTile(
-              icon: Icons.history,
-              title: "Order History",
-              onTap: () =>
-                  Get.to(() => OrderhistorypageView()),
-              context: context,
-            ),
+            // _buildMenuTile(
+            //   icon: Icons.history,
+            //   title: "Order History",
+            //   onTap: () =>
+            //       Get.to(() => OrderhistorypageView()),
+            //   context: context,
+            // ),
             _buildMenuTile(
               icon: Icons.language,
               title: "Language (${controller.selectedLanguage.value})",
