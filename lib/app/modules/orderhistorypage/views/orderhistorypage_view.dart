@@ -7,7 +7,6 @@ import '../controllers/orderhistorypage_controller.dart';
 class OrderhistorypageView extends StatelessWidget {
   OrderhistorypageView({super.key});
   final size = Get.size;
-
   final isDark = Get.isDarkMode;
   final controller = Get.put(OrderhistorypageController());
 

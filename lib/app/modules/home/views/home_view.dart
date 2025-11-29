@@ -14,6 +14,7 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import '../../addcartpageviews/controllers/addcartpageviews_controller.dart';
+import '../../categorydetailspage/controllers/categorydetailspage_controller.dart';
 import '../controllers/home_controller.dart';
 import '../../favouritepageview/controllers/favouritepageview_controller.dart';
 
@@ -23,12 +24,15 @@ class HomeView extends GetView<HomeController> {
   final favController = Get.put(FavouritepageviewController());
   final themeController = Get.find<ThemeController>();
   final AddcartpageviewsController _cartController = Get.put(AddcartpageviewsController());
-
+  final CategoryDetailspageController controller1 = Get.put(
+    CategoryDetailspageController(),
+  );
   final List<String> bannerImages = [
     'assets/images/banner1.png',
     'assets/images/ban8.avif',
     'assets/images/banner2.png',
   ];
+  bool get isDark => Theme.of(Get.context!).brightness == Brightness.dark;
 
   @override
   Widget build(BuildContext context) {
@@ -161,6 +165,30 @@ class HomeView extends GetView<HomeController> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Row(
+                children: [
+                  Icon(
+                    Icons.location_on,
+                    size: width * 0.050,
+                    color: isDark
+                        ? Colors.pink
+                        :  Colors.pink,
+                  ),
+                  const SizedBox(width: 4),
+                  Expanded(
+                    child: Text(
+                      "623707  Select delivery location",
+                      style: GoogleFonts.poppins(
+                        fontSize: width * 0.030 * textScale,
+                        fontWeight: FontWeight.w600,
+                        color: const Color.fromARGB(255, 201, 202, 202),
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: height * 0.025),
               _carouselSlider(context),
               SizedBox(height: height * 0.025),
               _searchBar(context),
@@ -357,38 +385,40 @@ class HomeView extends GetView<HomeController> {
     );
   }
 
+
   Widget _productCard(
-  Map<String, dynamic> item,
-  double screenWidth,
-  double screenHeight,
-) {
-  final favController = Get.find<FavouritepageviewController>();
-  final isFav = favController.isFavourite(item);
+      Map<String, dynamic> item,
+      double screenWidth,
+      double screenHeight,
+      ) {
+    final favController = Get.find<FavouritepageviewController>();
+    final itemId = item['id'] is int ? item['id'] : int.tryParse(item['id'].toString()) ?? 0;
+    final isFav = favController.isFavourite(itemId);
 
-  final bool isDark = Theme.of(Get.context!).brightness == Brightness.dark;
-
-  return GestureDetector(
-    onTap: () => Get.to(
-        () => ProductDetailsViewpageView(),
+    return GestureDetector(
+      onTap: () => Get.to(
+            () => ProductDetailsViewpageView(),
         arguments: {
-          'id': int.parse(item['id'].toString()),
+          'id': itemId,
           'images': [item['image']],
           'title': item['title'],
           'price': item['price'],
           'oldPrice': item['oldPrice'],
         },
       ),
-    child: Container(
-      width: screenWidth * 0.45,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(screenWidth * 0.04),
-        color: Theme.of(Get.context!).cardColor,   // SAME AS YOUR UI
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // ⭐ SAME UI — only overlay FIXED
-          ClipRRect(
+      child: Container(
+        width: screenWidth * 0.45,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(screenWidth * 0.04),
+          color: Theme.of(Get.context!).cardColor,
+        ),
+        child: Stack(
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Your product image
+                          ClipRRect(
             borderRadius: BorderRadius.vertical(
               top: Radius.circular(screenWidth * 0.02),
             ),
@@ -398,7 +428,7 @@ class HomeView extends GetView<HomeController> {
               ),
               child: Image.network(
                 item['image'] ?? '',
-                height: 100,                    // SAME
+                height: 120,                    // SAME
                 width: double.infinity,         // SAME
                 fit: BoxFit.cover,              // SAME
                 errorBuilder: (context, error, stackTrace) {
@@ -412,56 +442,182 @@ class HomeView extends GetView<HomeController> {
               ),
             ),
           ),
-
-          // ⭐ TEXT AREA – SAME UI
-          Padding(
-            padding: EdgeInsets.all(screenWidth * 0.03),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  item['title'] ?? '',
-                  style: TextStyle(
-                    fontSize: screenWidth * 0.04,
-                    fontWeight: FontWeight.bold,
-                    color: isDark ? Colors.white : Colors.black,
-                  ),
-                ),
-
-                SizedBox(height: screenHeight * 0.01),
-
-                Text(
-                  "₹ ${item['price']}",
-                  style: TextStyle(
-                    fontSize: screenWidth * 0.04,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.blue,
-                  ),
-                ),
-
-                SizedBox(height: screenHeight * 0.01),
-
-                // ⭐ Favorite button — SAME UI
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: GestureDetector(
-                    onTap: () {
-                      favController.toggleFavourite(item);
-                    },
-                    child: Icon(
-                      isFav ? Icons.favorite : Icons.favorite_border,
-                      color: isFav ? Colors.red : Colors.grey,
-                      size: screenWidth * 0.07,
-                    ),
+                // Rest of your product card content
+                Padding(
+                  padding: EdgeInsets.all(screenWidth * 0.02),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        item['title'] ?? 'No Title',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: screenWidth * 0.035,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      SizedBox(height: screenHeight * 0.005),
+                      Text(
+                        '${item['price'] ?? '0'}',
+                        style: TextStyle(
+                          color: Colors.pink,
+                          fontWeight: FontWeight.bold,
+                          fontSize: screenWidth * 0.04,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],
             ),
-          ),
-        ],
+            // Favorite button positioned absolutely
+            Positioned(
+              top: 8,
+              right: 8,
+              child: // In the _productCard widget, replace the favorite icon part with:
+              Obx(() {
+                final isFav = favController.isFavourite(itemId);
+                return GestureDetector(
+                  onTap: () async {
+                    await favController.toggleFavorite(item, itemId);
+                  },
+                  child: Container(
+                    padding: EdgeInsets.all(6),
+                    decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.8),
+                      shape: BoxShape.circle,
+                    ),
+                    child: Icon(
+                      isFav ? Icons.favorite : Icons.favorite_border,
+                      color: Colors.red,
+                      size: screenWidth * 0.05,
+                    ),
+                  ),
+                );
+              })
+            ),
+          ],
+        ),
       ),
-    ),
-  );
-}
+    );
+  }
+
+//   Widget _productCard(
+//   Map<String, dynamic> item,
+//   double screenWidth,
+//   double screenHeight,
+// ) {
+//   final favController = Get.find<FavouritepageviewController>();
+//   final isFav = favController.isFavourite(item);
+//    final itemId = item['id'] is int ? item['id'] : int.tryParse(item['id'].toString()) ?? 0;
+//
+//   final bool isDark = Theme.of(Get.context!).brightness == Brightness.dark;
+//
+//   return GestureDetector(
+//     onTap: () => Get.to(
+//         () => ProductDetailsViewpageView(),
+//         arguments: {
+//           'id': int.parse(item['id'].toString()),
+//           'images': [item['image']],
+//           'title': item['title'],
+//           'price': item['price'],
+//           'oldPrice': item['oldPrice'],
+//         },
+//       ),
+//     child: Container(
+//       width: screenWidth * 0.45,
+//       decoration: BoxDecoration(
+//         borderRadius: BorderRadius.circular(screenWidth * 0.04),
+//         color: Theme.of(Get.context!).cardColor,   // SAME AS YOUR UI
+//       ),
+//       child: Column(
+//         crossAxisAlignment: CrossAxisAlignment.start,
+//         children: [
+//           // ⭐ SAME UI — only overlay FIXED
+//           ClipRRect(
+//             borderRadius: BorderRadius.vertical(
+//               top: Radius.circular(screenWidth * 0.02),
+//             ),
+//             child: Container(
+//               decoration: BoxDecoration(
+//                 color: Colors.white,   // FIX: forces clean background under image
+//               ),
+//               child: Image.network(
+//                 item['image'] ?? '',
+//                 height: 100,                    // SAME
+//                 width: double.infinity,         // SAME
+//                 fit: BoxFit.cover,              // SAME
+//                 errorBuilder: (context, error, stackTrace) {
+//                   return Image.asset(
+//                     'assets/images/placeholder.png',
+//                     height: 100,
+//                     width: double.infinity,
+//                     fit: BoxFit.cover,
+//                   );
+//                 },
+//               ),
+//             ),
+//           ),
+//
+//           // ⭐ TEXT AREA – SAME UI
+//           Padding(
+//             padding: EdgeInsets.all(screenWidth * 0.03),
+//             child: Column(
+//               crossAxisAlignment: CrossAxisAlignment.start,
+//               children: [
+//                 Text(
+//                   item['title'] ?? '',
+//                   style: TextStyle(
+//                     fontSize: screenWidth * 0.04,
+//                     fontWeight: FontWeight.bold,
+//                     color: isDark ? Colors.white : Colors.black,
+//                   ),
+//                 ),
+//
+//                 SizedBox(height: screenHeight * 0.01),
+//
+//                 Text(
+//                   "₹ ${item['price']}",
+//                   style: TextStyle(
+//                     fontSize: screenWidth * 0.04,
+//                     fontWeight: FontWeight.bold,
+//                     color: Colors.blue,
+//                   ),
+//                 ),
+//
+//                 SizedBox(height: screenHeight * 0.01),
+//
+//                 // ⭐ Favorite button — SAME UI
+//                 Positioned(
+//                   top: 8,
+//                   right: 8,
+//                   child: GestureDetector(
+//                     onTap: () async {
+//                       await favController.toggleFavorite(item, itemId);
+//                       favController.update();
+//                     },
+//                     child: Container(
+//                       padding: EdgeInsets.all(6),
+//                       decoration: BoxDecoration(
+//                         color: Colors.white.withOpacity(0.8),
+//                         shape: BoxShape.circle,
+//                       ),
+//                       child: Icon(
+//                         isFav ? Icons.favorite : Icons.favorite_border,
+//                         color: Colors.red,
+//                         size: screenWidth * 0.05,
+//                       ),
+//                     ),
+//                   ),
+//                 ),
+//               ],
+//             ),
+//           ),
+//         ],
+//       ),
+//     ),
+//   );
+// }
 
 }

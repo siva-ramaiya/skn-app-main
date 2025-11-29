@@ -50,10 +50,10 @@ class _FavoriteCardState extends State<FavoriteCard> {
             ? const CircularProgressIndicator(color: Colors.white)
             : const Icon(Icons.delete, color: Colors.white, size: 30),
       ),
-      onDismissed: (_) => widget.controller.toggleFavourite(item),
+      onDismissed: (_) => widget.controller.toggleFavorite(item['name'],item['id']),
       confirmDismiss: (_) async {
         isProcessing.value = true;
-        await widget.controller.toggleFavourite(item);
+        await widget.controller.toggleFavorite(item['name'],item['id']);
         isProcessing.value = false;
         return false;
       },

@@ -36,27 +36,51 @@ class FavouritepageviewController extends GetxController {
     }
   }
 
-  Future<void> toggleFavourite(Map<String, dynamic> item) async {
-    try {
+// In FavouritepageviewController
+  bool isFavourite(dynamic itemId) {
+    return favouriteItems.any((item) {
       final id = item['id'];
-      final isFav = favouriteItems.any((p) => p['id'] == id);
+      final itemIdInt = itemId is int ? itemId : int.tryParse(itemId.toString());
+      if (itemIdInt == null) return false;
+
+      if (id is int) return id == itemIdInt;
+      if (id is String) return int.tryParse(id) == itemIdInt;
+      return false;
+    });
+  }
+
+  Future<void> toggleFavorite(Map<String, dynamic> item, dynamic id) async {
+    try {
+      final itemId = id is int ? id : int.tryParse(id.toString()) ?? 0;
+      if (itemId == 0) {
+        print('⚠️ Invalid ID: $id');
+        return;
+      }
+
+      final isFav = isFavourite(itemId);
+      bool success;
 
       if (isFav) {
-        final removed = await apiFavorite.removeFromFavorites(id);
-        if (removed) {
-          favouriteItems.removeWhere((p) => p['id'] == id);
+        success = await apiFavorite.removeFromFavorites(itemId);
+        if (success) {
+          favouriteItems.removeWhere((item) {
+            final id = item['id'];
+            if (id is int) return id == itemId;
+            if (id is String) return int.tryParse(id) == itemId;
+            return false;
+          });
         }
       } else {
-        final added = await apiFavorite.addToFavorites(id);
-        if (added) {
+        success = await apiFavorite.addToFavorites(itemId);
+        if (success) {
           favouriteItems.add(item);
         }
       }
+      update();
     } catch (e) {
-      print("❌ Error toggling favorite: $e");
+      print('❌ Error toggling favorite: $e');
     }
   }
-
   @override
   void onReady() {
     super.onReady();
@@ -112,7 +136,7 @@ class FavouritepageviewController extends GetxController {
       isLoading.value = false;
     }
   }
-  bool isFavourite(Map<String, dynamic> item) {
-    return favouriteItems.any((e) => e['id'] == item['id']);
-  }
+  // bool isFavourite(Map<String, dynamic> item) {
+  //   return favouriteItems.any((e) => e['id'] == item['id']);
+  // }
 }

@@ -49,45 +49,47 @@ class HelpsupportpageView extends GetView<HelpsupportpageController> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // ✅ Back Button Row (AppBar illa)
-              Positioned(
-                top: 16,
-                left: 16,
-                child: Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    borderRadius: BorderRadius.circular(30),
-                    onTap: () => Get.back(),
-                    child: Container(
-                      padding: EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                        color: isDark
-                            ? const Color.fromARGB(255, 248, 211, 99)
-                            : Colors.pink, // ✅ fixed
-                        shape: BoxShape.circle,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black26,
-                            blurRadius: 4,
-                            offset: Offset(2, 2),
-                          ),
-                        ],
-                      ),
-                      child: Icon(
-                        Icons.arrow_back,
-                        color: Colors.white,
-                        size: 22,
+               Align(
+                 alignment: Alignment.topLeft,
+
+                 child: Padding(
+                   padding: const EdgeInsets.only(top: 16, left: 16),
+                   child: Material(
+                    color: Colors.transparent,
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(30),
+                      onTap: () => Get.back(),
+                      child: Container(
+                        padding: EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          color: isDark
+                              ? const Color.fromARGB(255, 248, 211, 99)
+                              : Colors.pink,
+                          shape: BoxShape.circle,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black26,
+                              blurRadius: 4,
+                              offset: Offset(2, 2),
+                            ),
+                          ],
+                        ),
+                        child: Icon(
+                          Icons.arrow_back,
+                          color: Colors.white,
+                          size: 22,
+                        ),
                       ),
                     ),
-                  ),
-                ),
+                                   ),
+                 ),
               ),
 
-              SizedBox(height: height * 0.09),
+              SizedBox(height: height * 0.05),
 
               // 🔹 Categories
               SizedBox(
-                height: height * 0.16,
+                height: height * 0.12,
                 child: GridView.count(
                   crossAxisCount: 4,
                   crossAxisSpacing: width * 0.04,

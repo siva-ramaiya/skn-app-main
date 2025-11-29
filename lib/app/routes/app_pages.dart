@@ -11,8 +11,6 @@ import '../modules/categorypage/bindings/categorypage_binding.dart';
 import '../modules/categorypage/views/categorypage_view.dart';
 import '../modules/chatbotpage/bindings/chatbotpage_binding.dart';
 import '../modules/chatbotpage/views/chatbotpage_view.dart';
-import '../modules/conespagescreen/bindings/conespagescreen_binding.dart';
-import '../modules/conespagescreen/views/conespagescreen_view.dart';
 import '../modules/drawerpage/bindings/drawerpage_binding.dart';
 import '../modules/drawerpage/views/drawerpage_view.dart';
 import '../modules/favouritepageview/bindings/favouritepageview_binding.dart';
@@ -135,11 +133,6 @@ class AppPages {
       name: _Paths.ORDERCONFROMPAGEVIEW,
       page: () => OrderConfirmViewpageView(),
       binding: OrderconfrompageviewBinding(),
-    ),
-    GetPage(
-      name: _Paths.CONESPAGESCREEN,
-      page: () => ConespagescreenView(),
-      binding: ConespagescreenBinding(),
     ),
 
     GetPage(

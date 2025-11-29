@@ -5,7 +5,9 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 
-void showLogoutPopup({required bool isDark, required String token}) {
+import '../app/utils/storage_helper.dart';
+
+void showLogoutPopup({required bool isDark}) {
   final context = Get.context!;
   final size = MediaQuery.of(context).size;
 
@@ -54,42 +56,46 @@ void showLogoutPopup({required bool isDark, required String token}) {
                       side: const BorderSide(color: Colors.white),
                     ),
                   ),
-                  onPressed: () async {
-                    bool success = await ApiLogout.logout(token);
-                    Get.back(); 
-                    if (success) {
-                      Get.offAll(() => PhonescreenpageView());
-                      Get.snackbar(
-                        'Success',
-                        'Logged out successfully',
-                        backgroundColor: Colors.white,
-                        colorText: Colors.black,
-                        icon: Lottie.asset(
-                          'assets/images/Success.json',
-                          width: 40,
-                          height: 40,
-                        ),
-                        snackPosition: SnackPosition.TOP,
-                        borderRadius: 20,
-                        margin: const EdgeInsets.all(16),
-                      );
-                    } else {
-                      Get.snackbar(
-                        'Error',
-                        'Logout failed. Try again.',
-                        backgroundColor: Colors.white,
-                        colorText: Colors.black87,
-                        icon: Lottie.asset(
-                          'assets/images/Failed.json',
-                          width: 40,
-                          height: 40,
-                        ),
-                        snackPosition: SnackPosition.TOP,
-                        borderRadius: 20,
-                        margin: const EdgeInsets.all(16),
-                      );
-                    }
+                  onPressed: () {
+                    StorageHelper.clearToken(); // Clear saved token
+                    Get.offAllNamed('/loginpage');  // Redirect to login
                   },
+                  // onPressed: () async {
+                  //   bool success = await ApiLogout.logout(token);
+                  //   Get.back();
+                  //   if (success) {
+                  //     Get.offAll(() => PhonescreenpageView());
+                  //     Get.snackbar(
+                  //       'Success',
+                  //       'Logged out successfully',
+                  //       backgroundColor: Colors.white,
+                  //       colorText: Colors.black,
+                  //       icon: Lottie.asset(
+                  //         'assets/images/Success.json',
+                  //         width: 40,
+                  //         height: 40,
+                  //       ),
+                  //       snackPosition: SnackPosition.TOP,
+                  //       borderRadius: 20,
+                  //       margin: const EdgeInsets.all(16),
+                  //     );
+                  //   } else {
+                  //     Get.snackbar(
+                  //       'Error',
+                  //       'Logout failed. Try again.',
+                  //       backgroundColor: Colors.white,
+                  //       colorText: Colors.black87,
+                  //       icon: Lottie.asset(
+                  //         'assets/images/Failed.json',
+                  //         width: 40,
+                  //         height: 40,
+                  //       ),
+                  //       snackPosition: SnackPosition.TOP,
+                  //       borderRadius: 20,
+                  //       margin: const EdgeInsets.all(16),
+                  //     );
+                  //   }
+                  // },
                   child: Text(
                     "Yes",
                     style: GoogleFonts.poppins(
@@ -126,34 +132,34 @@ void showLogoutPopup({required bool isDark, required String token}) {
     ),
   );
 }
-
-/// 🔹 Drawer Tile
-Widget buildDrawerTile(
-  IconData icon,
-  String title,
-  VoidCallback onTap,
-  double textScale,
-  bool isDark,
-) {
-  return ListTile(
-    leading: Icon(icon, color: isDark ? Colors.white : Colors.black),
-    title: Text(
-      title,
-      textScaleFactor: textScale,
-      style: TextStyle(
-        color: isDark ? Colors.white : Colors.black,
-        fontWeight: FontWeight.w500,
-      ),
-    ),
-    onTap: () {
-      if (title == "Logout") {
-        showLogoutPopup(
-          isDark: isDark,
-          token: 'cbdccd38a0e526b29e2dca057c372bd4d35a8468',
-        );
-      } else {
-        onTap();
-      }
-    },
-  );
-}
+//
+// /// 🔹 Drawer Tile
+// Widget buildDrawerTile(
+//   IconData icon,
+//   String title,
+//   VoidCallback onTap,
+//   double textScale,
+//   bool isDark,
+// ) {
+//   return ListTile(
+//     leading: Icon(icon, color: isDark ? Colors.white : Colors.black),
+//     title: Text(
+//       title,
+//       textScaleFactor: textScale,
+//       style: TextStyle(
+//         color: isDark ? Colors.white : Colors.black,
+//         fontWeight: FontWeight.w500,
+//       ),
+//     ),
+//     onTap: () {
+//       if (title == "Logout") {
+//         showLogoutPopup(
+//           isDark: isDark,
+//           token: 'cbdccd38a0e526b29e2dca057c372bd4d35a8468',
+//         );
+//       } else {
+//         onTap();
+//       }
+//     },
+//   );
+// }

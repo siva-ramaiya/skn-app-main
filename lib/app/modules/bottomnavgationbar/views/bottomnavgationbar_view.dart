@@ -62,45 +62,45 @@ class _BottomnavigationbarViewState extends State<BottomnavigationbarView> {
       onWillPop: _onWillPop,
       child: Scaffold(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          backgroundColor: Get.isDarkMode
-              ? Color.fromARGB(255, 18, 17, 17)
-              : Colors.white,
-          elevation: 0,
-          title: (_selectedIndex == 0)
-              ? Row(
-                  children: [
-                    IconButton(
-                      icon: Icon(
-                        Icons.location_on,
-                        size: width * 0.050,
-                        color: isDark
-                            ? Colors.pink
-                            : const Color.fromARGB(255, 250, 209, 84),
-                      ),
-                      onPressed: () {
-                        Get.to(GooglepageviewView());
-                      },
-                      padding: EdgeInsets.zero,
-                      constraints: const BoxConstraints(),
-                    ),
-                    const SizedBox(width: 1),
-                    Expanded(
-                      child: Text(
-                        "623707 Select delivery location",
-                        style: GoogleFonts.poppins(
-                          fontSize: width * 0.032 * textScale,
-                          fontWeight: FontWeight.bold,
-                          color: const Color.fromARGB(255, 201, 202, 202),
-                        ),
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                  ],
-                )
-              : const SizedBox.shrink(),
-        ),
+        // appBar: AppBar(
+        //   automaticallyImplyLeading: false,
+        //   backgroundColor: Get.isDarkMode
+        //       ? Color.fromARGB(255, 18, 17, 17)
+        //       : Colors.white,
+        //   elevation: 0,
+        //   title: (_selectedIndex == 0)
+        //       ? Row(
+        //           children: [
+        //             IconButton(
+        //               icon: Icon(
+        //                 Icons.location_on,
+        //                 size: width * 0.050,
+        //                 color: isDark
+        //                     ? Colors.pink
+        //                     : const Color.fromARGB(255, 250, 209, 84),
+        //               ),
+        //               onPressed: () {
+        //                 Get.to(GooglepageviewView());
+        //               },
+        //               padding: EdgeInsets.zero,
+        //               constraints: const BoxConstraints(),
+        //             ),
+        //             const SizedBox(width: 1),
+        //             Expanded(
+        //               child: Text(
+        //                 "623707 Select delivery location",
+        //                 style: GoogleFonts.poppins(
+        //                   fontSize: width * 0.032 * textScale,
+        //                   fontWeight: FontWeight.bold,
+        //                   color: const Color.fromARGB(255, 201, 202, 202),
+        //                 ),
+        //                 overflow: TextOverflow.ellipsis,
+        //               ),
+        //             ),
+        //           ],
+        //         )
+        //       : const SizedBox.shrink(),
+        // ),
         body: _screens[_selectedIndex],
         bottomNavigationBar: Obx(() {
           // Use the instance variable instead of Get.find

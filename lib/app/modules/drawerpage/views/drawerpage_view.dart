@@ -13,6 +13,7 @@ import 'package:foodapp/themes/ThemeController%20.dart';
 import 'package:foodapp/widgets/showLogoutPopup.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../../../utils/storage_helper.dart';
 import '../../bottomnavgationbar/views/bottomnavgationbar_view.dart';
 import '../controllers/drawerpage_controller.dart';
 
@@ -72,7 +73,7 @@ class DrawerView extends GetView<DrawerpageController> {
                       radius: avatarRadius,
                       backgroundImage: controller.profileImage.value != null
                           ? FileImage(controller.profileImage.value!)
-                          : const AssetImage('assets/images/drawerlogo.jpg')
+                          : const AssetImage('assets/images/profile1.jpg')
                                 as ImageProvider,
                     ),
                     Positioned(
@@ -181,9 +182,10 @@ class DrawerView extends GetView<DrawerpageController> {
               Icons.logout,
               'Logout',
               () {
+
                 showLogoutPopup(
                   isDark: isDark,
-                  token: 'cbdccd38a0e526b29e2dca057c372bd4d35a8468',
+
                 );
               },
               textScale,

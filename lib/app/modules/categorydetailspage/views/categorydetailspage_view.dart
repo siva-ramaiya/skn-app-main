@@ -3,6 +3,7 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:foodapp/app/routes/app_pages.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../../addcartpageviews/controllers/addcartpageviews_controller.dart';
 import '../../addcartpageviews/views/addcartpageviews_view.dart';
 import '../../notificationspage/views/notificationspage_view.dart';
 import '../../productdetailspage/views/productdetailspage_view.dart';
@@ -17,12 +18,16 @@ class CategoryDetailspageView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final AddcartpageviewsController _cartController = Get.put(AddcartpageviewsController());
+
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final textColor = isDark ? Colors.white : Colors.black;
 
     final size = MediaQuery.of(context).size;
     final screenWidth = size.width;
-
+     final width = size.width;
+    final height = size.height;
+    final textScale = MediaQuery.of(context).textScaleFactor;
     final padding = screenWidth * 0.04;
     final imageSize = screenWidth * 0.35;
     final titleFontSize = screenWidth < 600 ? 12 : 16;
@@ -51,28 +56,54 @@ class CategoryDetailspageView extends StatelessWidget {
         ),
 
         actions: [
-          Stack(
-            children: [
-              IconButton(
-                icon: Icon(Icons.shopping_cart, color: textColor),
-                onPressed: () => Get.to(() => AddcartpageviewsView()),
-              ),
-              Positioned(
-                right: 6,
-                top: 6,
-                child: CircleAvatar(
-                  radius: screenWidth * 0.02,
-                  backgroundColor: Colors.red,
-                  child: Text(
-                    '1',
-                    style: TextStyle(
-                      fontSize: screenWidth * 0.025,
-                      color: Colors.white,
-                    ),
+          Padding(
+            padding: const EdgeInsets.only(right: 8.0),
+            child: Stack(
+              children: [
+                IconButton(
+                  icon: Icon(
+                    Icons.shopping_cart_outlined,
+                    color: Theme.of(context).iconTheme.color,
+                    size: width * 0.07,
                   ),
+                  onPressed: () {
+                    Get.toNamed(Routes.ADDCARTPAGEVIEWS);
+                  },
                 ),
-              ),
-            ],
+                Obx(() {
+                  final itemCount = _cartController.cartItems.length;
+                  if (itemCount > 0) {
+                    return Positioned(
+                      right: 8,
+                      top: 8,
+                      child: Container(
+                        padding: EdgeInsets.all(2),
+                        decoration: BoxDecoration(
+                          color: Colors.red,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        constraints: BoxConstraints(
+                          minWidth: width * 0.04,
+                          minHeight: width * 0.04,
+                        ),
+                        child: Center(
+                          child: Text(
+                            itemCount > 9 ? '9+' : '$itemCount',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: width * 0.025,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ),
+                    );
+                  }
+                  return const SizedBox.shrink();
+                }),
+              ],
+            ),
           ),
           IconButton(
             icon: Icon(Icons.notifications_none, color: textColor),
