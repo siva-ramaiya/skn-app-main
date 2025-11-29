@@ -25,17 +25,45 @@ class FeedbackpageView extends StatelessWidget {
     double maxWidth = width > 900
         ? 700
         : width > 600
-            ? 520
-            : width * 0.92;
+        ? 520
+        : width * 0.92;
 
     final theme = Theme.of(context);
     final primaryColor = theme.colorScheme.primary;
     final onSurface = theme.colorScheme.onSurface;
     final cardColor = theme.cardColor;
     final brightness = theme.brightness;
+    final bool isDark = theme.brightness == Brightness.dark;
+    final size = MediaQuery.of(context).size;
 
     return Scaffold(
       backgroundColor: theme.colorScheme.background,
+      appBar: AppBar(
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            bottomLeft: Radius.circular(20),
+            bottomRight: Radius.circular(20),
+          ),
+        ),
+        backgroundColor: isDark
+            ? const Color.fromARGB(255, 249, 209, 88)
+            : Colors.pink,
+        title: Text(
+          "FeedBack",
+          style: GoogleFonts.poppins(
+            fontSize: size.width * 0.04,
+            fontWeight: FontWeight.w600,
+            color: Colors.white,
+          ),
+        ),
+        leading: IconButton(
+          onPressed: () {
+            Get.offAll(() => BottomnavigationbarView());
+          },
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
+        ),
+        centerTitle: true,
+      ),
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
@@ -54,10 +82,11 @@ class FeedbackpageView extends StatelessWidget {
                   color: cardColor,
                   borderRadius: BorderRadius.circular(16 * scaleFactor),
                   border: Border.all(
-                    color: (brightness == Brightness.dark
-                            ? const Color.fromARGB(255, 242, 198, 65)
-                            : Colors.pink)
-                        .withOpacity(0.7),
+                    color:
+                        (brightness == Brightness.dark
+                                ? const Color.fromARGB(255, 242, 198, 65)
+                                : Colors.pink)
+                            .withOpacity(0.7),
                     width: 2,
                   ),
                   boxShadow: [
@@ -85,10 +114,16 @@ class FeedbackpageView extends StatelessWidget {
                           padding: EdgeInsets.all(6 * scaleFactor),
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            color: (brightness == Brightness.dark
-                                    ? const Color.fromARGB(255, 242, 198, 65)
-                                    : Colors.pink)
-                                .withOpacity(0.1),
+                            color:
+                                (brightness == Brightness.dark
+                                        ? const Color.fromARGB(
+                                            255,
+                                            242,
+                                            198,
+                                            65,
+                                          )
+                                        : Colors.pink)
+                                    .withOpacity(0.1),
                           ),
                           child: Icon(
                             Icons.close_rounded,
@@ -108,7 +143,7 @@ class FeedbackpageView extends StatelessWidget {
                       style: GoogleFonts.poppins(
                         textStyle: theme.textTheme.headlineSmall?.copyWith(
                           fontWeight: FontWeight.w700,
-                          fontSize:18 * scaleFactor,
+                          fontSize: 18 * scaleFactor,
                           color: onSurface,
                         ),
                       ),
@@ -158,8 +193,9 @@ class FeedbackpageView extends StatelessWidget {
                                     boxShadow: selected
                                         ? [
                                             BoxShadow(
-                                              color:
-                                                  themeColor.withOpacity(0.4),
+                                              color: themeColor.withOpacity(
+                                                0.4,
+                                              ),
                                               blurRadius: 8,
                                               spreadRadius: 1,
                                             ),
@@ -172,8 +208,7 @@ class FeedbackpageView extends StatelessWidget {
                                       fontSize: selected
                                           ? 38 * scaleFactor
                                           : 30 * scaleFactor,
-                                      color:
-                                          selected ? themeColor : onSurface,
+                                      color: selected ? themeColor : onSurface,
                                     ),
                                   ),
                                 ),
@@ -192,7 +227,7 @@ class FeedbackpageView extends StatelessWidget {
                       style: GoogleFonts.poppins(
                         textStyle: theme.textTheme.bodyLarge?.copyWith(
                           fontWeight: FontWeight.w600,
-                          fontSize:15 * scaleFactor,
+                          fontSize: 15 * scaleFactor,
                           color: onSurface,
                         ),
                       ),
@@ -226,13 +261,15 @@ class FeedbackpageView extends StatelessWidget {
                             horizontal: 16 * scaleFactor,
                           ),
                           border: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.circular(14 * scaleFactor),
+                            borderRadius: BorderRadius.circular(
+                              14 * scaleFactor,
+                            ),
                             borderSide: BorderSide.none,
                           ),
                           focusedBorder: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.circular(14 * scaleFactor),
+                            borderRadius: BorderRadius.circular(
+                              14 * scaleFactor,
+                            ),
                             borderSide: BorderSide(
                               color: brightness == Brightness.dark
                                   ? const Color.fromARGB(255, 242, 198, 65)
@@ -322,8 +359,9 @@ class FeedbackpageView extends StatelessWidget {
                                 vertical: 16 * scaleFactor,
                               ),
                               shape: RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.circular(12 * scaleFactor),
+                                borderRadius: BorderRadius.circular(
+                                  12 * scaleFactor,
+                                ),
                               ),
                               backgroundColor: brightness == Brightness.dark
                                   ? const Color.fromARGB(255, 242, 198, 65)
@@ -349,8 +387,9 @@ class FeedbackpageView extends StatelessWidget {
                                 vertical: 16 * scaleFactor,
                               ),
                               shape: RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.circular(12 * scaleFactor),
+                                borderRadius: BorderRadius.circular(
+                                  12 * scaleFactor,
+                                ),
                               ),
                               side: BorderSide(
                                 color: brightness == Brightness.dark

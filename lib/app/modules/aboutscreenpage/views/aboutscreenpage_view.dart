@@ -56,13 +56,39 @@ class _AboutpageViewState extends State<AboutpageView>
     final screenWidth = MediaQuery.of(context).size.width;
     final bool isWeb = screenWidth > 600;
     final bool isDark = theme.brightness == Brightness.dark;
-
+    final size = MediaQuery.of(context).size;
     final double titleSize = isWeb ? 22 : 18;
     final double sectionTitleSize = isWeb ? 18 : 14;
     final double bodyTextSize = isWeb ? 16 : 13;
 
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(20),
+              bottomRight: Radius.circular(20),
+            ),
+          ),
+          backgroundColor: isDark
+              ? const Color.fromARGB(255, 249, 209, 88)
+              : Colors.pink,
+          title: Text(
+            "About",
+            style: GoogleFonts.poppins(
+              fontSize: size.width * 0.04,
+              fontWeight: FontWeight.w600,
+              color: Colors.white,
+            ),
+          ),
+          leading: IconButton(
+            onPressed: () {
+              Get.offAll(() => BottomnavigationbarView());
+            },
+            icon: const Icon(Icons.arrow_back, color: Colors.white),
+          ),
+          centerTitle: true,
+        ),
         backgroundColor: theme.scaffoldBackgroundColor,
         body: Stack(
           children: [
@@ -93,50 +119,41 @@ class _AboutpageViewState extends State<AboutpageView>
             ),
 
             // Custom Back Button
-            Positioned(
-              top: 16,
-              left: 16,
-              child: Material(
-                color: Colors.transparent,
-                shape: const CircleBorder(),
-                child: InkWell(
-                  customBorder: CircleBorder(),
-                  onTap: () {
-                    // Always navigate to BottomNavigationbarView if something goes wrong
-                    try {
-                      if (Get.previousRoute.isNotEmpty) {
-                        Get.back();
-                      } else {
-                        Get.offAll(() => BottomnavigationbarView());
-                      }
-                    } catch (e) {
-                      // fallback
-                      Get.offAll(() => BottomnavigationbarView());
-                    }
-                  },
+            // Positioned(
+            //   top: 16,
+            //   left: 16,
+            //   child: Material(
+            //     color: Colors.transparent,
+            //     shape: const CircleBorder(),
+            //     child: InkWell(
+            //       customBorder: CircleBorder(),
+            //       onTap: () {
+            //         // Always navigate directly to home (BottomnavigationbarView)
+            //         Get.offAll(() => BottomnavigationbarView());
+            //       },
 
-                  child: Container(
-                    padding: const EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      color: isDark ? const Color(0xFFF8D363) : Colors.pink,
-                      shape: BoxShape.circle,
-                      boxShadow: const [
-                        BoxShadow(
-                          color: Colors.black26,
-                          blurRadius: 4,
-                          offset: Offset(2, 2),
-                        ),
-                      ],
-                    ),
-                    child: Icon(
-                      Icons.arrow_back,
-                      color: Colors.white,
-                      size: 22,
-                    ),
-                  ),
-                ),
-              ),
-            ),
+            //       child: Container(
+            //         padding: const EdgeInsets.all(8),
+            //         decoration: BoxDecoration(
+            //           color: isDark ? const Color(0xFFF8D363) : Colors.pink,
+            //           shape: BoxShape.circle,
+            //           boxShadow: const [
+            //             BoxShadow(
+            //               color: Colors.black26,
+            //               blurRadius: 4,
+            //               offset: Offset(2, 2),
+            //             ),
+            //           ],
+            //         ),
+            //         child: Icon(
+            //           Icons.arrow_back,
+            //           color: Colors.white,
+            //           size: 22,
+            //         ),
+            //       ),
+            //     ),
+            //   ),
+            // ),
 
             // Main Content
             FadeTransition(
