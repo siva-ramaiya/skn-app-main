@@ -5,14 +5,8 @@ import '../modules/aboutscreenpage/bindings/aboutscreenpage_binding.dart';
 import '../modules/aboutscreenpage/views/aboutscreenpage_view.dart';
 import '../modules/addcartpageviews/bindings/addcartpageviews_binding.dart';
 import '../modules/addcartpageviews/views/addcartpageviews_view.dart';
-import '../modules/barsstickspage/bindings/barsstickspage_binding.dart';
-import '../modules/barsstickspage/views/barsstickspage_view.dart';
-import '../modules/bisleriwaterpage/bindings/bisleriwaterpage_binding.dart';
-import '../modules/bisleriwaterpage/views/bisleriwaterpage_view.dart';
 import '../modules/bottomnavgationbar/bindings/bottomnavgationbar_binding.dart';
 import '../modules/bottomnavgationbar/views/bottomnavgationbar_view.dart';
-import '../modules/burgerscreenpage/bindings/burgerscreenpage_binding.dart';
-import '../modules/burgerscreenpage/views/burgerscreenpage_view.dart';
 import '../modules/categorypage/bindings/categorypage_binding.dart';
 import '../modules/categorypage/views/categorypage_view.dart';
 import '../modules/chatbotpage/bindings/chatbotpage_binding.dart';
@@ -21,8 +15,6 @@ import '../modules/conespagescreen/bindings/conespagescreen_binding.dart';
 import '../modules/conespagescreen/views/conespagescreen_view.dart';
 import '../modules/drawerpage/bindings/drawerpage_binding.dart';
 import '../modules/drawerpage/views/drawerpage_view.dart';
-import '../modules/familypackspage/bindings/familypackspage_binding.dart';
-import '../modules/familypackspage/views/familypackspage_view.dart';
 import '../modules/favouritepageview/bindings/favouritepageview_binding.dart';
 import '../modules/favouritepageview/views/favouritepageview_view.dart';
 import '../modules/feedbackpage/bindings/feedbackpage_binding.dart';
@@ -37,8 +29,6 @@ import '../modules/loginpage/bindings/loginpage_binding.dart';
 import '../modules/loginpage/views/loginpage_view.dart';
 import '../modules/myorderpage/bindings/myorderpage_binding.dart';
 import '../modules/myorderpage/views/myorderpage_view.dart';
-import '../modules/noodelsscreenpage/bindings/noodelsscreenpage_binding.dart';
-import '../modules/noodelsscreenpage/views/noodelsscreenpage_view.dart';
 import '../modules/notificationspage/bindings/notificationspage_binding.dart';
 import '../modules/notificationspage/views/notificationspage_view.dart';
 import '../modules/optscreenpage/bindings/optscreenpage_binding.dart';
@@ -130,16 +120,7 @@ class AppPages {
       page: () => CategoryDetailspageView(),
       binding: PizzascreenpageBinding(),
     ),
-    GetPage(
-      name: _Paths.BURGERSCREENPAGE,
-      page: () => BurgerscreenpageView(),
-      binding: BurgerscreenpageBinding(),
-    ),
-    GetPage(
-      name: _Paths.NOODELSSCREENPAGE,
-      page: () => NoodelsscreenpageView(),
-      binding: NoodelsscreenpageBinding(),
-    ),
+
     GetPage(
       name: _Paths.FEEDBACKPAGE,
       page: () => FeedbackpageView(),
@@ -160,16 +141,7 @@ class AppPages {
       page: () => ConespagescreenView(),
       binding: ConespagescreenBinding(),
     ),
-    GetPage(
-      name: _Paths.BARSSTICKSPAGE,
-      page: () => BarsstickspageView(),
-      binding: BarsstickspageBinding(),
-    ),
-    GetPage(
-      name: _Paths.FAMILYPACKSPAGE,
-      page: () => FamilypackspageView(),
-      binding: FamilypackspageBinding(),
-    ),
+
     GetPage(
       name: _Paths.NOTIFICATIONSPAGE,
       page: () => NotificationspageView(),
@@ -190,11 +162,7 @@ class AppPages {
       page: () => CalendereventpageView(),
       binding: CalendereventpageBinding(),
     ),
-    GetPage(
-      name: _Paths.BISLERIWATERPAGE,
-      page: () => bisleriWaterPageView(),
-      binding: BisleriwaterpageBinding(),
-    ),
+
     GetPage(
       name: _Paths.CATEGORYPAGE,
       page: () => const CategorypageView(),

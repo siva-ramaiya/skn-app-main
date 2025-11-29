@@ -471,13 +471,13 @@ class ProfilescreenpageView extends GetView<ProfilescreenpageController> {
               ),
             ),
             SizedBox(height: screenHeight * 0.012),
-            _buildMenuTile(
-              icon: Icons.history,
-              title: "Order History",
-              onTap: () =>
-                  Get.to(() => OrderhistorypageView()),
-              context: context,
-            ),
+            // _buildMenuTile(
+            //   icon: Icons.history,
+            //   title: "Order History",
+            //   onTap: () =>
+            //       Get.to(() => OrderhistorypageView()),
+            //   context: context,
+            // ),
             _buildMenuTile(
               icon: Icons.language,
               title: "Language (${controller.selectedLanguage.value})",
@@ -490,12 +490,12 @@ class ProfilescreenpageView extends GetView<ProfilescreenpageController> {
               onTap: () => Get.to(HelpsupportpageView()),
               context: context,
             ),
-            _buildMenuTile(
-              icon: Icons.notifications,
-              title: "Notifications",
-              onTap: () => Get.to( NotificationspageView()),
-              context: context,
-            ),
+            // _buildMenuTile(
+            //   icon: Icons.notifications,
+            //   title: "Notifications",
+            //   onTap: () => Get.to( NotificationspageView()),
+            //   context: context,
+            // ),
             SizedBox(height: screenHeight * 0.04),
           ],
         ),

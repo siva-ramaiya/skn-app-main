@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:foodapp/app/modules/bottomnavgationbar/views/bottomnavgationbar_view.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../controllers/orderhistorypage_controller.dart';
 
 class OrderhistorypageView extends StatelessWidget {
   OrderhistorypageView({super.key});
+  final size = Get.size;
 
+  final isDark = Get.isDarkMode;
   final controller = Get.put(OrderhistorypageController());
 
   @override
@@ -12,9 +16,30 @@ class OrderhistorypageView extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.grey.shade100,
       appBar: AppBar(
-        title: const Text("My Orders", style: TextStyle(fontWeight: FontWeight.bold)),
-        backgroundColor: Colors.white,
-        elevation: 1,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            bottomLeft: Radius.circular(20),
+            bottomRight: Radius.circular(20),
+          ),
+        ),
+        backgroundColor: isDark
+            ? const Color.fromARGB(255, 249, 209, 88)
+            : Colors.pink,
+        title: Text(
+          "My Orders",
+          style: GoogleFonts.poppins(
+            fontSize: size.width * 0.04,
+            fontWeight: FontWeight.w600,
+            color: Colors.white,
+          ),
+        ),
+        leading: IconButton(
+          onPressed: () {
+            Get.offAll(() => BottomnavigationbarView());
+          },
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
+        ),
+        centerTitle: true,
       ),
       body: Obx(() {
         if (controller.isLoading.value) {
@@ -49,7 +74,10 @@ class OrderhistorypageView extends StatelessWidget {
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(14),
                   boxShadow: [
-                    BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 8),
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.05),
+                      blurRadius: 8,
+                    ),
                   ],
                 ),
                 child: Padding(
@@ -84,7 +112,9 @@ class OrderhistorypageView extends StatelessWidget {
                             Text(
                               "Order #${order["id"]}",
                               style: const TextStyle(
-                                  fontWeight: FontWeight.w600, fontSize: 16),
+                                fontWeight: FontWeight.w600,
+                                fontSize: 16,
+                              ),
                             ),
 
                             const SizedBox(height: 5),
@@ -94,7 +124,9 @@ class OrderhistorypageView extends StatelessWidget {
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: const TextStyle(
-                                  fontSize: 14, color: Colors.black87),
+                                fontSize: 14,
+                                color: Colors.black87,
+                              ),
                             ),
 
                             const SizedBox(height: 5),
@@ -115,13 +147,18 @@ class OrderhistorypageView extends StatelessWidget {
                               children: [
                                 Container(
                                   padding: const EdgeInsets.symmetric(
-                                      horizontal: 12, vertical: 5),
+                                    horizontal: 12,
+                                    vertical: 5,
+                                  ),
                                   decoration: BoxDecoration(
-                                    color: _statusColor(order["status"]).withOpacity(0.15),
+                                    color: _statusColor(
+                                      order["status"],
+                                    ).withOpacity(0.15),
                                     borderRadius: BorderRadius.circular(20),
                                   ),
                                   child: Text(
-                                    (order["status"] ?? "Pending").toUpperCase(),
+                                    (order["status"] ?? "Pending")
+                                        .toUpperCase(),
                                     style: TextStyle(
                                       color: _statusColor(order["status"]),
                                       fontSize: 12,
@@ -130,10 +167,10 @@ class OrderhistorypageView extends StatelessWidget {
                                   ),
                                 ),
                               ],
-                            )
+                            ),
                           ],
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ),
@@ -178,8 +215,7 @@ class OrderhistorypageView extends StatelessWidget {
             children: [
               const Text(
                 "Order Details",
-                style: TextStyle(
-                    fontSize: 20, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 15),
 
@@ -209,17 +245,25 @@ class OrderhistorypageView extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(item?["itemData"]["name"] ?? "",
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 15)),
+                            Text(
+                              item?["itemData"]["name"] ?? "",
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15,
+                              ),
+                            ),
                             const SizedBox(height: 4),
                             Text("Qty: ${item["quantity"]}"),
                           ],
                         ),
                       ),
-                      Text("₹${item["price"]}",
-                          style: const TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 16)),
+                      Text(
+                        "₹${item["price"]}",
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                      ),
                     ],
                   ),
                 );
@@ -231,11 +275,17 @@ class OrderhistorypageView extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text("Total Amount:",
-                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-                  Text("₹${order["total_amount"]}",
-                      style:
-                          const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                  const Text(
+                    "Total Amount:",
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    "₹${order["total_amount"]}",
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ],
               ),
 
