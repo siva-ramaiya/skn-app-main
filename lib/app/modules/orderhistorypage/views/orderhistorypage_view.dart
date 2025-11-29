@@ -39,6 +39,16 @@ class OrderhistorypageView extends StatelessWidget {
           icon: const Icon(Icons.arrow_back, color: Colors.white),
         ),
         centerTitle: true,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.refresh, color: Colors.white),
+            tooltip: 'Refresh',
+            onPressed: () {
+              // Refresh the same page
+              Get.offAll(() => OrderhistorypageView());
+            },
+          ),
+        ],
       ),
       body: Obx(() {
         if (controller.isLoading.value) {
