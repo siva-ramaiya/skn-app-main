@@ -113,11 +113,11 @@ class AppPages {
       page: () => OptscreenpageView(),
       binding: OptscreenpageBinding(),
     ),
-    GetPage(
-      name: _Paths.PIZZASCREENPAGE,
-      page: () => CategoryDetailspageView(),
-      binding: PizzascreenpageBinding(),
-    ),
+    // GetPage(
+    //   name: _Paths.PIZZASCREENPAGE,
+    //   page: () => CategoryDetailspageView(),
+    //   binding: PizzascreenpageBinding(),
+    // ),
 
     GetPage(
       name: _Paths.FEEDBACKPAGE,
@@ -134,7 +134,11 @@ class AppPages {
       page: () => OrderConfirmViewpageView(),
       binding: OrderconfrompageviewBinding(),
     ),
-
+    GetPage(
+      name: _Paths.CATEGORY_DETAILS_PAGE,
+      page: () => CategoryDetailspageView(),
+      binding: CategoryDetailspageBinding(),
+    ),
     GetPage(
       name: _Paths.NOTIFICATIONSPAGE,
       page: () => NotificationspageView(),

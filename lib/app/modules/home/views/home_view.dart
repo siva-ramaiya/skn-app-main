@@ -23,10 +23,10 @@ class HomeView extends GetView<HomeController> {
 
   final favController = Get.put(FavouritepageviewController());
   final themeController = Get.find<ThemeController>();
-  final AddcartpageviewsController _cartController = Get.put(AddcartpageviewsController());
-  final CategoryDetailspageController controller1 = Get.put(
-    CategoryDetailspageController(),
+  final AddcartpageviewsController _cartController = Get.put(
+    AddcartpageviewsController(),
   );
+
   final List<String> bannerImages = [
     'assets/images/banner1.png',
     'assets/images/ban8.avif',
@@ -170,9 +170,7 @@ class HomeView extends GetView<HomeController> {
                   Icon(
                     Icons.location_on,
                     size: width * 0.050,
-                    color: isDark
-                        ? Colors.pink
-                        :  Colors.pink,
+                    color: isDark ? Colors.pink : Colors.pink,
                   ),
                   const SizedBox(width: 4),
                   Expanded(
@@ -279,7 +277,11 @@ class HomeView extends GetView<HomeController> {
               width: width * 0.16,
               child: InkWell(
                 borderRadius: BorderRadius.circular(width * 0.10),
-                onTap: () => _navigateToCategory(item['id'], item['label']),
+                onTap: () {
+                  print('Category Label ---------_${item['label']}');
+                  print('Category ID---------------${item['id']}');
+                  _navigateToCategory(item['id'], item['label']);
+                },
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -317,15 +319,15 @@ class HomeView extends GetView<HomeController> {
   }
 
   void _navigateToCategory(String categoryId, String categoryLabel) {
-    Get.to(
-      () => CategoryDetailspageView(),
+    print('Navigating to category - ID: $categoryId, Label: $categoryLabel');
+    Get.toNamed(
+      Routes.CATEGORY_DETAILS_PAGE,
       arguments: {
         'categoryId': int.tryParse(categoryId) ?? 0,
         'categoryLabel': categoryLabel,
       },
     );
   }
-
   Widget _sectionHeader(BuildContext context, String title) {
     final width = MediaQuery.of(context).size.width;
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
@@ -377,7 +379,9 @@ class HomeView extends GetView<HomeController> {
             duration: const Duration(milliseconds: 500),
             columnCount: 2,
             child: ScaleAnimation(
-              child: FadeInAnimation(child: _productCard(item, screenWidth, screenWidth)),
+              child: FadeInAnimation(
+                child: _productCard(item, screenWidth, screenWidth),
+              ),
             ),
           );
         },
@@ -385,19 +389,20 @@ class HomeView extends GetView<HomeController> {
     );
   }
 
-
   Widget _productCard(
-      Map<String, dynamic> item,
-      double screenWidth,
-      double screenHeight,
-      ) {
+    Map<String, dynamic> item,
+    double screenWidth,
+    double screenHeight,
+  ) {
     final favController = Get.find<FavouritepageviewController>();
-    final itemId = item['id'] is int ? item['id'] : int.tryParse(item['id'].toString()) ?? 0;
+    final itemId = item['id'] is int
+        ? item['id']
+        : int.tryParse(item['id'].toString()) ?? 0;
     final isFav = favController.isFavourite(itemId);
 
     return GestureDetector(
       onTap: () => Get.to(
-            () => ProductDetailsViewpageView(),
+        () => ProductDetailsViewpageView(),
         arguments: {
           'id': itemId,
           'images': [item['image']],
@@ -418,30 +423,31 @@ class HomeView extends GetView<HomeController> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // Your product image
-                          ClipRRect(
-            borderRadius: BorderRadius.vertical(
-              top: Radius.circular(screenWidth * 0.02),
-            ),
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.white,   // FIX: forces clean background under image
-              ),
-              child: Image.network(
-                item['image'] ?? '',
-                height: 120,                    // SAME
-                width: double.infinity,         // SAME
-                fit: BoxFit.cover,              // SAME
-                errorBuilder: (context, error, stackTrace) {
-                  return Image.asset(
-                    'assets/images/placeholder.png',
-                    height: 100,
-                    width: double.infinity,
-                    fit: BoxFit.cover,
-                  );
-                },
-              ),
-            ),
-          ),
+                ClipRRect(
+                  borderRadius: BorderRadius.vertical(
+                    top: Radius.circular(screenWidth * 0.02),
+                  ),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors
+                          .white, // FIX: forces clean background under image
+                    ),
+                    child: Image.network(
+                      item['image'] ?? '',
+                      height: 120, // SAME
+                      width: double.infinity, // SAME
+                      fit: BoxFit.cover, // SAME
+                      errorBuilder: (context, error, stackTrace) {
+                        return Image.asset(
+                          'assets/images/placeholder.png',
+                          height: 100,
+                          width: double.infinity,
+                          fit: BoxFit.cover,
+                        );
+                      },
+                    ),
+                  ),
+                ),
                 // Rest of your product card content
                 Padding(
                   padding: EdgeInsets.all(screenWidth * 0.02),
@@ -495,7 +501,7 @@ class HomeView extends GetView<HomeController> {
                     ),
                   ),
                 );
-              })
+              }),
             ),
           ],
         ),
@@ -503,121 +509,120 @@ class HomeView extends GetView<HomeController> {
     );
   }
 
-//   Widget _productCard(
-//   Map<String, dynamic> item,
-//   double screenWidth,
-//   double screenHeight,
-// ) {
-//   final favController = Get.find<FavouritepageviewController>();
-//   final isFav = favController.isFavourite(item);
-//    final itemId = item['id'] is int ? item['id'] : int.tryParse(item['id'].toString()) ?? 0;
-//
-//   final bool isDark = Theme.of(Get.context!).brightness == Brightness.dark;
-//
-//   return GestureDetector(
-//     onTap: () => Get.to(
-//         () => ProductDetailsViewpageView(),
-//         arguments: {
-//           'id': int.parse(item['id'].toString()),
-//           'images': [item['image']],
-//           'title': item['title'],
-//           'price': item['price'],
-//           'oldPrice': item['oldPrice'],
-//         },
-//       ),
-//     child: Container(
-//       width: screenWidth * 0.45,
-//       decoration: BoxDecoration(
-//         borderRadius: BorderRadius.circular(screenWidth * 0.04),
-//         color: Theme.of(Get.context!).cardColor,   // SAME AS YOUR UI
-//       ),
-//       child: Column(
-//         crossAxisAlignment: CrossAxisAlignment.start,
-//         children: [
-//           // ⭐ SAME UI — only overlay FIXED
-//           ClipRRect(
-//             borderRadius: BorderRadius.vertical(
-//               top: Radius.circular(screenWidth * 0.02),
-//             ),
-//             child: Container(
-//               decoration: BoxDecoration(
-//                 color: Colors.white,   // FIX: forces clean background under image
-//               ),
-//               child: Image.network(
-//                 item['image'] ?? '',
-//                 height: 100,                    // SAME
-//                 width: double.infinity,         // SAME
-//                 fit: BoxFit.cover,              // SAME
-//                 errorBuilder: (context, error, stackTrace) {
-//                   return Image.asset(
-//                     'assets/images/placeholder.png',
-//                     height: 100,
-//                     width: double.infinity,
-//                     fit: BoxFit.cover,
-//                   );
-//                 },
-//               ),
-//             ),
-//           ),
-//
-//           // ⭐ TEXT AREA – SAME UI
-//           Padding(
-//             padding: EdgeInsets.all(screenWidth * 0.03),
-//             child: Column(
-//               crossAxisAlignment: CrossAxisAlignment.start,
-//               children: [
-//                 Text(
-//                   item['title'] ?? '',
-//                   style: TextStyle(
-//                     fontSize: screenWidth * 0.04,
-//                     fontWeight: FontWeight.bold,
-//                     color: isDark ? Colors.white : Colors.black,
-//                   ),
-//                 ),
-//
-//                 SizedBox(height: screenHeight * 0.01),
-//
-//                 Text(
-//                   "₹ ${item['price']}",
-//                   style: TextStyle(
-//                     fontSize: screenWidth * 0.04,
-//                     fontWeight: FontWeight.bold,
-//                     color: Colors.blue,
-//                   ),
-//                 ),
-//
-//                 SizedBox(height: screenHeight * 0.01),
-//
-//                 // ⭐ Favorite button — SAME UI
-//                 Positioned(
-//                   top: 8,
-//                   right: 8,
-//                   child: GestureDetector(
-//                     onTap: () async {
-//                       await favController.toggleFavorite(item, itemId);
-//                       favController.update();
-//                     },
-//                     child: Container(
-//                       padding: EdgeInsets.all(6),
-//                       decoration: BoxDecoration(
-//                         color: Colors.white.withOpacity(0.8),
-//                         shape: BoxShape.circle,
-//                       ),
-//                       child: Icon(
-//                         isFav ? Icons.favorite : Icons.favorite_border,
-//                         color: Colors.red,
-//                         size: screenWidth * 0.05,
-//                       ),
-//                     ),
-//                   ),
-//                 ),
-//               ],
-//             ),
-//           ),
-//         ],
-//       ),
-//     ),
-//   );
-// }
-
+  //   Widget _productCard(
+  //   Map<String, dynamic> item,
+  //   double screenWidth,
+  //   double screenHeight,
+  // ) {
+  //   final favController = Get.find<FavouritepageviewController>();
+  //   final isFav = favController.isFavourite(item);
+  //    final itemId = item['id'] is int ? item['id'] : int.tryParse(item['id'].toString()) ?? 0;
+  //
+  //   final bool isDark = Theme.of(Get.context!).brightness == Brightness.dark;
+  //
+  //   return GestureDetector(
+  //     onTap: () => Get.to(
+  //         () => ProductDetailsViewpageView(),
+  //         arguments: {
+  //           'id': int.parse(item['id'].toString()),
+  //           'images': [item['image']],
+  //           'title': item['title'],
+  //           'price': item['price'],
+  //           'oldPrice': item['oldPrice'],
+  //         },
+  //       ),
+  //     child: Container(
+  //       width: screenWidth * 0.45,
+  //       decoration: BoxDecoration(
+  //         borderRadius: BorderRadius.circular(screenWidth * 0.04),
+  //         color: Theme.of(Get.context!).cardColor,   // SAME AS YOUR UI
+  //       ),
+  //       child: Column(
+  //         crossAxisAlignment: CrossAxisAlignment.start,
+  //         children: [
+  //           // ⭐ SAME UI — only overlay FIXED
+  //           ClipRRect(
+  //             borderRadius: BorderRadius.vertical(
+  //               top: Radius.circular(screenWidth * 0.02),
+  //             ),
+  //             child: Container(
+  //               decoration: BoxDecoration(
+  //                 color: Colors.white,   // FIX: forces clean background under image
+  //               ),
+  //               child: Image.network(
+  //                 item['image'] ?? '',
+  //                 height: 100,                    // SAME
+  //                 width: double.infinity,         // SAME
+  //                 fit: BoxFit.cover,              // SAME
+  //                 errorBuilder: (context, error, stackTrace) {
+  //                   return Image.asset(
+  //                     'assets/images/placeholder.png',
+  //                     height: 100,
+  //                     width: double.infinity,
+  //                     fit: BoxFit.cover,
+  //                   );
+  //                 },
+  //               ),
+  //             ),
+  //           ),
+  //
+  //           // ⭐ TEXT AREA – SAME UI
+  //           Padding(
+  //             padding: EdgeInsets.all(screenWidth * 0.03),
+  //             child: Column(
+  //               crossAxisAlignment: CrossAxisAlignment.start,
+  //               children: [
+  //                 Text(
+  //                   item['title'] ?? '',
+  //                   style: TextStyle(
+  //                     fontSize: screenWidth * 0.04,
+  //                     fontWeight: FontWeight.bold,
+  //                     color: isDark ? Colors.white : Colors.black,
+  //                   ),
+  //                 ),
+  //
+  //                 SizedBox(height: screenHeight * 0.01),
+  //
+  //                 Text(
+  //                   "₹ ${item['price']}",
+  //                   style: TextStyle(
+  //                     fontSize: screenWidth * 0.04,
+  //                     fontWeight: FontWeight.bold,
+  //                     color: Colors.blue,
+  //                   ),
+  //                 ),
+  //
+  //                 SizedBox(height: screenHeight * 0.01),
+  //
+  //                 // ⭐ Favorite button — SAME UI
+  //                 Positioned(
+  //                   top: 8,
+  //                   right: 8,
+  //                   child: GestureDetector(
+  //                     onTap: () async {
+  //                       await favController.toggleFavorite(item, itemId);
+  //                       favController.update();
+  //                     },
+  //                     child: Container(
+  //                       padding: EdgeInsets.all(6),
+  //                       decoration: BoxDecoration(
+  //                         color: Colors.white.withOpacity(0.8),
+  //                         shape: BoxShape.circle,
+  //                       ),
+  //                       child: Icon(
+  //                         isFav ? Icons.favorite : Icons.favorite_border,
+  //                         color: Colors.red,
+  //                         size: screenWidth * 0.05,
+  //                       ),
+  //                     ),
+  //                   ),
+  //                 ),
+  //               ],
+  //             ),
+  //           ),
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }
 }

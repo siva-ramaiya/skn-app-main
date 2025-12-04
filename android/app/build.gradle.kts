@@ -5,18 +5,18 @@ plugins {
 }
 
 android {
-    namespace = "example.astrovibe.foodapp"
-    compileSdk = 36   // ✅ must be at least 35
-    ndkVersion = "25.1.8937393"  // Using a stable NDK version
+    namespace = "com.skn.foodapp"
+    compileSdk = 36   // Updated to match plugin requirements
+    ndkVersion = "27.0.12077973"  // Updated to match plugin requirements
     
     buildFeatures {
         buildConfig = true
     }
 
     defaultConfig {
-        applicationId = "example.astrovibe.foodapp"
+        applicationId = "com.skn.foodapp"
         minSdk = flutter.minSdkVersion
-        targetSdk = 34   // can update to 35 later if needed
+        targetSdk = 34   // Keeping targetSdk at 34 for stability, can update later if needed
         versionCode = flutter.versionCode
         versionName = flutter.versionName
         multiDexEnabled = true
@@ -44,7 +44,7 @@ flutter {
 }
 
 dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.23")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.22")
 
     // ✅ desugaring new version
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.4")

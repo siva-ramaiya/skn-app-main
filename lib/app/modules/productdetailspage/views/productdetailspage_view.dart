@@ -152,6 +152,16 @@ class _FoodDetailsViewState extends State<ProductDetailsViewpageView> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         foregroundColor: Colors.white,
+        leading: IconButton(
+            onPressed: () {
+              if (Navigator.of(context).canPop()) {
+                Navigator.of(context).pop();
+              } else {
+                Get.offAll(() => BottomnavigationbarView()); // Replace with your home screen widget
+              }
+            },
+          icon: const Icon(Icons.arrow_back_ios_new, color: Colors.white),
+        ),
         actions: [
           IconButton(
             icon: Icon(Icons.share, color: Colors.white, size: width * 0.06),

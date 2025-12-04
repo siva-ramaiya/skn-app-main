@@ -12,20 +12,21 @@ import '../controllers/categorydetailspage_controller.dart';
 class CategoryDetailspageView extends StatelessWidget {
   CategoryDetailspageView({super.key});
 
-  final CategoryDetailspageController controller = Get.put(
-    CategoryDetailspageController(),
-  );
+  final CategoryDetailspageController controller = Get.find<CategoryDetailspageController>();
+
 
   @override
   Widget build(BuildContext context) {
-    final AddcartpageviewsController _cartController = Get.put(AddcartpageviewsController());
+    final AddcartpageviewsController _cartController = Get.put(
+      AddcartpageviewsController(),
+    );
 
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final textColor = isDark ? Colors.white : Colors.black;
 
     final size = MediaQuery.of(context).size;
     final screenWidth = size.width;
-     final width = size.width;
+    final width = size.width;
     final height = size.height;
     final textScale = MediaQuery.of(context).textScaleFactor;
     final padding = screenWidth * 0.04;
@@ -38,6 +39,7 @@ class CategoryDetailspageView extends StatelessWidget {
         : screenWidth >= 600
         ? 3
         : 2;
+    print('Category Labeleee ------------${controller.categoryLabel.value}');
 
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -45,14 +47,17 @@ class CategoryDetailspageView extends StatelessWidget {
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         elevation: 0,
         title: Obx(
-          () => Text(
-            controller.categoryLabel.value,
-            style: GoogleFonts.poppins(
-              fontSize: titleFontSize + 2,
-              fontWeight: FontWeight.bold,
-              color: textColor,
-            ),
-          ),
+                () {
+              print('Current category label in app bar: ${controller.categoryLabel.value}'); // Debug log
+              return Text(
+                controller.categoryLabel.value,
+                style: GoogleFonts.poppins(
+                  fontSize: titleFontSize + 2,
+                  fontWeight: FontWeight.bold,
+                  color: textColor,
+                ),
+              );
+            }
         ),
 
         actions: [
@@ -115,6 +120,7 @@ class CategoryDetailspageView extends StatelessWidget {
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: padding, vertical: 10),
           child: Obx(() {
+            print('${controller.isLoading.value}');
             if (controller.isLoading.value) {
               return const Center(
                 child: CircularProgressIndicator(color: Colors.pink),
@@ -159,13 +165,16 @@ class CategoryDetailspageView extends StatelessWidget {
                         child: GestureDetector(
                           onTap: () {
                             // Get.offAllNamed(Routes.HOME);
-                            Get.offAllNamed(Routes.PRODUCTDETAILSPAGE,
+                            Get.offAllNamed(
+                              Routes.PRODUCTDETAILSPAGE,
                               arguments: {
                                 'images': [product['image_url']],
-                                'title': product['name'],
+                                'title': product['name'] ?? 'Product',
                                 'id': product['id'],
-                                'price': "₹50/kg",
-                                'oldPrice': '₹450',
+                                'price': product['price']?.toString() ?? '₹0',
+                                'oldPrice':
+                                    product['old_price']?.toString() ?? '',
+                                'description': product['description'] ?? '',
                               },
                             );
                           },
@@ -265,7 +274,9 @@ class CategoryDetailspageView extends StatelessWidget {
                               ),
                               const SizedBox(height: 4),
                               Text(
-                                "₹50/kg",
+                                product['price'] != null
+                                    ? '₹${product['price']}'
+                                    : 'Price not available',
                                 style: GoogleFonts.poppins(
                                   fontSize: descFontSize,
                                   fontWeight: FontWeight.bold,

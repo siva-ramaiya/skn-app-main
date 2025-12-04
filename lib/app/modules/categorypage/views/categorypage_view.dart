@@ -183,7 +183,12 @@ class _CategorypageViewState extends State<CategorypageView> {
 
                   closedBuilder: (context, action) {
                     return GestureDetector(
-                      onTap: action, // This triggers the animation
+                      onTap: () {
+                        _navigateToCategory(
+                          category['id'].toString(),
+                          category['name'],
+                        );
+                      },
                       child: Stack(
                         clipBehavior: Clip.none,
                         children: [

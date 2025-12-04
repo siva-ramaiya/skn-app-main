@@ -18,6 +18,8 @@ abstract class Routes {
   static const OPTSCREENPAGE = _Paths.OPTSCREENPAGE;
   static const PHONESCREENPAGE = _Paths.PHONESCREENPAGE;
   static const PIZZASCREENPAGE = _Paths.PIZZASCREENPAGE;
+  static const CATEGORY_DETAILS_PAGE = _Paths.CATEGORY_DETAILS_PAGE;
+
   static const BURGERSCREENPAGE = _Paths.BURGERSCREENPAGE;
   static const NOODELSSCREENPAGE = _Paths.NOODELSSCREENPAGE;
   static const FEEDBACKPAGE = _Paths.FEEDBACKPAGE;
@@ -56,6 +58,7 @@ abstract class _Paths {
   static const OPTSCREENPAGE = '/optscreenpage';
   static const PHONESCREENPAGE = '/phonescreenpage';
   static const PIZZASCREENPAGE = '/pizzascreenpage';
+  static const CATEGORY_DETAILS_PAGE = '/category-details-page';
   static const BURGERSCREENPAGE = '/burgerscreenpage';
   static const NOODELSSCREENPAGE = '/noodelsscreenpage';
   static const FEEDBACKPAGE = '/feedbackpage';

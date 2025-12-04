@@ -5,7 +5,9 @@ import 'package:foodapp/app/data/services/api_profile.dart';
 
 class ProfilescreenpageController extends GetxController {
   // Observable variables
-  var profileImage = 'https://ui-avatars.com/api/?name=User&background=random&color=fff&size=200'.obs;
+  var profileImage =
+      'https://ui-avatars.com/api/?name=User&background=random&color=fff&size=200'
+          .obs;
   var selectedLanguage = 'English'.obs;
   var userName = 'John Doe'.obs;
   var email = 'john.doe@example.com'.obs;
@@ -19,7 +21,7 @@ class ProfilescreenpageController extends GetxController {
   void onInit() {
     super.onInit();
     fetchAndSetUserDetails();
-    
+
     // Set up error handling for profile image loading
     ever(profileImage, (String imagePath) {
       // This will be triggered whenever profileImage changes
@@ -33,17 +35,17 @@ class ProfilescreenpageController extends GetxController {
     try {
       print('🔍 Fetching user details...');
       final response = await apiProfile.fetchUserDetails();
-      
+
       if (response != null && response.isNotEmpty) {
         print('📦 Received user data: $response');
-        
+
         // Update user details from the response
         if (response['data'] != null) {
           final userData = response['data'];
           userName.value = userData['name']?.toString() ?? userName.value;
           email.value = userData['email']?.toString() ?? email.value;
           phone.value = userData['phone_number']?.toString() ?? phone.value;
-          
+
           print('✅ User details updated successfully');
           print('   Name: ${userName.value}');
           print('   Email: ${email.value}');

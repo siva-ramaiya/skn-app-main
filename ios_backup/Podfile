@@ -1,0 +1,16 @@
+# Define the iOS platform version
+platform :ios, '13.0'
+
+target 'Runner' do
+  # Comment the next line if you don't want to use dynamic frameworks
+  use_frameworks!
+
+  # Pods for Runner
+  pod 'Flutter', :configuration => 'Debug'
+  pod 'Flutter', :configuration => 'Debug'
+  target 'RunnerTests' do
+    inherit! :search_paths
+    # Pods for testing
+  end
+
+end

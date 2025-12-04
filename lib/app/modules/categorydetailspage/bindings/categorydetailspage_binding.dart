@@ -2,11 +2,13 @@ import 'package:get/get.dart';
 
 import '../controllers/categorydetailspage_controller.dart';
 
-class PizzascreenpageBinding extends Bindings {
+
+class CategoryDetailspageBinding extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut<CategoryDetailspageController>(
-      () => CategoryDetailspageController(),
+          () => CategoryDetailspageController(),
+      fenix: true,
     );
   }
 }
